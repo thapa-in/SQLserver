@@ -1,0 +1,5 @@
+UPDATE A    
+  SET indx = RA.Ro
+from dbo.tbldata A
+  INNER JOIN dbo.tbldata2 RA
+    ON A.id = RA.id
