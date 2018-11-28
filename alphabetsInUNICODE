@@ -1,0 +1,21 @@
+
+ALTER FUNCTION dbo.getNameForm
+(@param nvarchar(50))
+RETURNS INT
+AS
+BEGIN
+	Declare @Result int, @lnt int, @i int;--, @param nvarchar(50);
+	--set @param=N'सुरेंदर KOUR';
+	--create table #t1(col int)
+	declare @t1 table(col int)
+	set @lnt=LEN(@param); set @i=0;set @Result=0;
+	WHILE @i<=@lnt
+	BEGIN
+		INSERT INTO @t1(col)
+		SELECT ASCII(SUBSTRING(@param,@i,1))
+		set @i+=1;
+	END
+	SELECT @Result=count(col) from @t1 WHERE (col between 97 and 122) or (COL BETWEEN 65 AND 90)
+	delete @t1 
+	RETURN @Result
+END
