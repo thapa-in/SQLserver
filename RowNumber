@@ -1,0 +1,5 @@
+SELECT 
+  ROW_NUMBER() OVER(PARTITION BY pageno ORDER BY pageno ASC)AS Ro
+  ,pageno
+  ,id
+FROM dbo.tbldata
