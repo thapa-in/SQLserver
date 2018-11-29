@@ -1,0 +1,6 @@
+SELECT studentName, PATINDEX('%tiwadi%',studentName)location, 
+SUBSTRING(krutiName,1,(PATINDEX('%tiwadi%',studentName)-1))+'Tiwari' Nname
+, * FROM DBO.students
+where 
+krutiName like '%tiwadi%'
+order by rollno
