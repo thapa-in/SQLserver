@@ -1,0 +1,1 @@
+SELECT sName_Hindi from dbo.students where sName_Hindi like N'%कुमार%'
