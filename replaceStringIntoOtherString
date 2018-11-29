@@ -1,6 +1,17 @@
+Query for : 'Ravi Tiwari', 'Anushka Tiwari'
+===============================================
 SELECT studentName, PATINDEX('%tiwadi%',studentName)location, 
 SUBSTRING(krutiName,1,(PATINDEX('%tiwadi%',studentName)-1))+'Tiwari' Nname
 , * FROM DBO.students
 where 
 krutiName like '%tiwadi%'
+order by rollno
+===============================================
+Query for : 'Ravi Tiwari', 'Parmeshwar Singh'
+===============================================
+SELECT studentName, PATINDEX('%Ü%',studentName)loc
+,SUBSTRING(studentName,1,(PATINDEX('%Ü%',studentName)-1))+''''+ SUBSTRING(studentName,(PATINDEX('%Ü%',studentName)+1),LEN(studentName)) Nname
+, * FROM DBO.students
+where 
+studentName like '%war%'
 order by rollno
