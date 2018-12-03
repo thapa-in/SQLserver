@@ -1,0 +1,4 @@
+UPDATE A SET A.indx=B.newindx
+from dbo.tbldata A INNER JOIN 
+(select id, row_number() over(partition by pageno order by pageno)newindx from dbo.tbldata)B 
+ON A.id=B.id
