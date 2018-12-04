@@ -1,0 +1,59 @@
+CREATE TABLE [dbo].[attendance](
+	[id] [int] NOT NULL,
+	[StaffName] [varchar](100) NULL,
+	[CompanyName] [varchar](100) NULL,
+	[isPresent] [char](1) NULL,
+	[date] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+
+CREATE PROCEDURE dbo.getAttendance
+	@month int,
+	@year int
+AS
+BEGIN
+	--DECLARE @month int, @year int, @lastDay int
+	DECLARE @lastDay int
+	set @month = 1 
+	set @year = 2012
+	-- calculations
+	DECLARE @startDate datetime, @endDate datetime
+	SET @startDate =  convert(varchar, @year) + '-' + convert(varchar, @month) + '-1'
+	set @endDate = DATEADD(s,-1,DATEADD(mm, DATEDIFF(m,0,@startDate)+1,0))
+	set @lastDay =  day(@endDate) --last day of month
+
+	print('showing data from ' + convert(varchar, @startDate) + ' to ' + convert(varchar, @endDate))
+	print('original report')
+
+	--SELECT StaffName, isPresent, day([date]) as day FROM attendance
+	--where [date] between @startDate and @endDate
+
+	declare @day int; set @day = 2
+	declare @days varchar(max);	set @days = '[1]'
+	WHILE (@day <= @lastDay)
+	BEGIN
+	   set @days = @days + ',[' + convert(varchar, @day) + ']'
+	   set @day = @day + 1
+	END
+	declare @query varchar(max); set @query = '
+	SELECT StaffName, ' + @days  +' FROM
+	(SELECT StaffName, isPresent, day(date) as day FROM attendance) AS SourceTable
+	PIVOT
+	(
+	MAX(isPresent)
+	FOR day IN ( ' + @days + ')' + '
+	) AS PivotTable;'
+
+	--select @query
+
+	print('pivoted report')    
+	exec(@query)
+END
+GO
+
+
