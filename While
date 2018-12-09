@@ -1,0 +1,7 @@
+declare @i int;
+SET @i=8;
+WHILE (@i<21)
+BEGIN
+	INSERT INTO dbo.sections (id, sectionname) vALUES(@i,'Section-'+CONVERT(varchar(50),@i))
+	SET @i+=1;
+END
