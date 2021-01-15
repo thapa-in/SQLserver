@@ -1,0 +1,8 @@
+	***Parameter :***
+  ```
+  @departmentId int
+  ```
+  ***Code :***
+  ```
+  WHERE 1=(CASE WHEN @departmentId=0 OR d.departmentId=@departmentId THEN 1 ELSE 0 END)
+  ```
