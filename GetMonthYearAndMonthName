@@ -1,0 +1,27 @@
+```
+CREATE FUNCTION getMonthsDtl
+(	
+	@StartDate  DATETIME
+    ,@EndDate    DATETIME
+)
+RETURNS TABLE 
+AS
+RETURN 
+(
+	--SELECT   DateName( month , DateAdd( month , monthid , -1 )) Name,monthid from(  
+	--SELECT  Month(DATEADD(MONTH, x.number, @StartDate)) AS MonthId  
+	--FROM    master.dbo.spt_values x  
+	--WHERE   x.type = 'P'          
+	--AND     x.number <= DATEDIFF(MONTH, @StartDate, @EndDate)  
+	--) A 
+	--DECLARE @StartDate  DATETIME = '2020-11-01', @EndDate    DATETIME = '2021-01-01'
+            
+	SELECT YEAR(y.dt) AS Year,
+		   MONTH(y.dt) AS Month,
+		   DATENAME(MONTH, y.dt) AS MonthName
+	FROM    master.dbo.spt_values x
+	CROSS APPLY (SELECT DATEADD(MONTH, x.number, @StartDate)) AS y(dt)
+	WHERE   x.type = 'P'        
+	AND     x.number <= DATEDIFF(MONTH, @StartDate, @EndDate)  
+)
+```
