@@ -1,7 +1,8 @@
 1. Dump file get from GoDaddy or SQL Server
-2. Download One-Click-Sql-Restore tool from online.
-3. With the help of this software 
+2. Change extenstion to .bak
+3. Download One-Click-Sql-Restore tool from online.
+4. With the help of this software 
   - Select Database where we need to restore
   - Select dump file
   - then click Restore button.
-4. Database restored succuessfully.
+5. Database restored succuessfully.
